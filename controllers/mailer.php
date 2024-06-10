@@ -12,8 +12,8 @@ $mail->SMTPAuth = true;
 $mail->Host = "smtp.gmail.com";
 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 $mail->Port = 587;
-$mail->Username = "andreagecoleaa@gmail.com"; //gmail ko muna, change it na lang
-$mail->Password = "oizp cogv yxgs nlly";
+$mail->Username = ""; //lagay na lang yung mail na gagamitin or what. personal email ko kasi ginamit ko 
+$mail->Password = "";
 
 $mail->isHtml(true);
 
