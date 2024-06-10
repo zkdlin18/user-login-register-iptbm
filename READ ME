@@ -1,0 +1,4 @@
+install na lang yung phpmailer kasi hindi maupload nang maayos yung mga file here :))
+
+cmd(syempre dapat na sa dir nung proj):
+composer require phpmailer/phpmailer
