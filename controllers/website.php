@@ -84,7 +84,7 @@ class WebsiteController {
                 <p class="bold">Subject:</p><p>$subject</p>
                 <p class="bold">Message:</p><p>$message</p>
                 <p>We will get back to you soon.</p>
-                <p>Best regards,<br/>
+                <p>Regards,<br/>
                 <span class="bold">IPTBM Team</span>
                 </p>
             </body>
