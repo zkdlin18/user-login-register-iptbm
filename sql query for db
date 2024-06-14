@@ -24,13 +24,14 @@ ALTER TABLE users
 -- for contacts
   CREATE TABLE contacts (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    contact_id VARCHAR(255) UNIQUE NOT NULL,
+    contact_id VARCHAR(255) NOT NULL,
     full_name VARCHAR(255) NOT NULL,
     email_address VARCHAR(255) NOT NULL,
     subject VARCHAR(255) NOT NULL,
     message TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    status ENUM('pending', 'viewed') DEFAULT 'pending'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    created_at DATETIME NOT NULL,
+    status ENUM('pending', 'viewed') NOT NULL DEFAULT 'pending'
+);
+
 
 
