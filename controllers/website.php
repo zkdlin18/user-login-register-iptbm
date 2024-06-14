@@ -19,7 +19,7 @@ class WebsiteController {
         $like_pattern = $prefix . '-%';
 
         do {
-            $stmt_check = $conn->prepare("SELECT MAX(CAST(SUBSTRING(contact_id, 9) AS UNSIGNED)) AS max_id FROM contact_form_submissions WHERE contact_id LIKE ?");
+            $stmt_check = $conn->prepare("SELECT MAX(CAST(SUBSTRING(contact_id, 9) AS UNSIGNED)) AS max_id FROM contacts WHERE contact_id LIKE ?");
             $stmt_check->bind_param("s", $like_pattern);
             $stmt_check->execute();
             $result_check = $stmt_check->get_result();
@@ -63,7 +63,7 @@ class WebsiteController {
             return;
         }
 
-        $stmt = $conn->prepare("INSERT INTO contact_form_submissions (contact_id, full_name, email_address, subject, message, created_at, status) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO contacts (contact_id, full_name, email_address, subject, message, created_at, status) VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("sssssss", $contact_id, $full_name, $email_address, $subject, $message, $created_at, $status);
 
         if ($stmt->execute()) {
