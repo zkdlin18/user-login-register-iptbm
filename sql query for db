@@ -33,5 +33,7 @@ ALTER TABLE users
     status ENUM('pending', 'viewed') NOT NULL DEFAULT 'pending'
 );
 
-
+-- for login attempts
+ALTER TABLE users ADD COLUMN login_attempts INT DEFAULT 0;
+ALTER TABLE users ADD COLUMN last_attempt_time DATETIME;
 
