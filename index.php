@@ -33,7 +33,7 @@ $router->post('/api/auth/register', 'AuthController@register');
 $router->post('/api/auth/login', 'AuthController@login');
 $router->post('/api/auth/mailToken', 'AuthController@mailToken');
 $router->post('/api/auth/passReset', 'AuthController@passReset');
-$router->post('/api/website/contacts', 'WebsiteController@contacts');
+$router->post('/api/website/contact', 'WebsiteController@contact');
 
 
 // Get Requests
