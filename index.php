@@ -24,6 +24,7 @@ require 'config.php';
 require 'router.php';
 require 'controllers/auth.php';
 require 'controllers/website.php';
+require 'controllers/admin.php';
 
 // Initialize Router
 $router = new Router();
@@ -34,6 +35,7 @@ $router->post('/api/auth/login', 'AuthController@login');
 $router->post('/api/auth/mailToken', 'AuthController@mailToken');
 $router->post('/api/auth/passReset', 'AuthController@passReset');
 $router->post('/api/website/contact', 'WebsiteController@contact');
+$router->post('/api/admin/add-record', 'AdminController@addRecord');
 
 
 // Get Requests
@@ -41,6 +43,36 @@ $router->get('/api/user/register', 'AuthController@register');
 $router->get('/api/user/login', 'AuthController@login');
 $router->get('/api/auth/mailToken', 'AuthController@mailToken');
 $router->get('/api/auth/passReset', 'AuthController@passReset');
+$router->get('/api/admin/inventors', function() {
+  $user_id = $_GET['user_id'] ?? '';
+
+  if (!empty($user_id)) {
+      $adminController = new AdminController();
+      $adminController->getInventors($user_id);
+  } else {
+      $response = array(
+          'status' => 'error',
+          'message' => 'Invalid user ID.'
+      );
+      echo json_encode($response);
+  }
+});
+
+$router->get('/api/admin/technologies', function() {
+  $user_id = $_GET['user_id'] ?? '';
+
+  if (!empty($user_id)) {
+      $adminController = new AdminController();
+      $adminController->getTechnologies($user_id);
+  } else {
+      $response = array(
+          'status' => 'error',
+          'message' => 'Invalid user ID.'
+      );
+      echo json_encode($response);
+  }
+});
+
 
 // Put Requests
 $router->put('/api/user/register', 'AuthController@register');
