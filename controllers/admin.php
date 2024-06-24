@@ -58,7 +58,7 @@ class AdminController {
             $record_id = $prefix . '-' . $new_id_number;
 
             $banner_filename = $record_id . '_' . basename($banner['name']);
-            $banner_path = 'Uploads/Banner/' . $banner_filename;
+            $banner_path = 'Uploads/Records/' . $banner_filename;
 
             if (!move_uploaded_file($banner['tmp_name'], $banner_path)) {
                 $response['status'] = 'error';
