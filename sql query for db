@@ -1,8 +1,8 @@
 -- create the database
-CREATE DATABASE IF NOT EXISTS lspu_iptbm_rtms;
+CREATE DATABASE lspu_iptbm_rtms;
 
 -- create the users table
-CREATE TABLE IF NOT EXISTS users (
+CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id VARCHAR(10) NOT NULL UNIQUE,
     profile_picture VARCHAR(255) DEFAULT NULL,
@@ -24,16 +24,34 @@ ALTER TABLE users
 -- for contacts
   CREATE TABLE contacts (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    contact_id VARCHAR(255) NOT NULL,
+    contact_id VARCHAR(255) UNIQUE NOT NULL,
     full_name VARCHAR(255) NOT NULL,
     email_address VARCHAR(255) NOT NULL,
     subject VARCHAR(255) NOT NULL,
     message TEXT NOT NULL,
-    created_at DATETIME NOT NULL,
-    status ENUM('pending', 'viewed') NOT NULL DEFAULT 'pending'
-);
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status ENUM('pending', 'viewed') DEFAULT 'pending'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 -- for login attempts
 ALTER TABLE users ADD COLUMN login_attempts INT DEFAULT 0;
 ALTER TABLE users ADD COLUMN last_attempt_time DATETIME;
 
+
+--for records table
+CREATE TABLE records (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    record_id VARCHAR(255) NOT NULL UNIQUE,
+    banner VARCHAR(255) DEFAULT NULL,
+    technology VARCHAR(255) NOT NULL,
+    intellectual_property VARCHAR(255) NOT NULL,
+    year INT NOT NULL,
+    date_of_filing DATE NOT NULL,
+    application_no VARCHAR(255) NOT NULL,
+    abstract TEXT NOT NULL,
+    inventors VARCHAR(255) NOT NULL,
+    status ENUM('applied', 'In development', 'prototype', 'testing', 'pilot', 'alpha', 'beta', 'release candidate', 'live', 'retired', 'cancelled', 'finished') NOT NULL,
+    branch ENUM('siniloan', 'sta cruz', 'san pablo', 'los banos') NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
