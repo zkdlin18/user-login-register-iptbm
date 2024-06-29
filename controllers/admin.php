@@ -103,42 +103,51 @@ class AdminController {
     }
 
     //inventors
-    public function getInventors($user_id) {
+    public function getInventors() {
         global $conn;
-
+    
+        $user_id = $_GET['user_id'] ?? '';
+    
         header('Content-Type: text/event-stream');
         header('Cache-Control: no-cache');
-
+    
         $response = array();
-
+    
+        if (empty($user_id)) {
+            $response['status'] = 'error';
+            $response['message'] = 'User ID is required.';
+            echo "data: " . json_encode($response) . "\n\n";
+            return;
+        }
+    
         $stmt = $conn->prepare("SELECT branch FROM users WHERE user_id = ?");
         $stmt->bind_param("s", $user_id);
         $stmt->execute();
         $result = $stmt->get_result();
-
+    
         if ($result->num_rows == 0) {
             $response['status'] = 'error';
             $response['message'] = 'Invalid user ID.';
             echo "data: " . json_encode($response) . "\n\n";
             return;
         }
-
+    
         $user_data = $result->fetch_assoc();
         $branch = $user_data['branch'];
         $stmt->close();
-
+    
         $stmt = $conn->prepare("SELECT record_id, branch, technology, inventors, status 
-                               FROM records
-                               WHERE branch = ?");
+                                FROM records
+                                WHERE branch = ?");
         $stmt->bind_param("s", $branch);
         $stmt->execute();
         $result = $stmt->get_result();
-
+    
         if ($result->num_rows > 0) {
             $response['status'] = 'success';
             $response['message'] = 'Records found for branch: ' . $branch;
             $response['data'] = array();
-
+    
             while ($row = $result->fetch_assoc()) {
                 $inventors = explode(',', $row['inventors']);
                 foreach ($inventors as $inventor) {
@@ -156,16 +165,18 @@ class AdminController {
             $response['status'] = 'error';
             $response['message'] = 'No records found for branch: ' . $branch;
         }
-
+    
         $stmt->close();
-
+    
         echo "data: " . json_encode($response) . "\n\n";
-    }
+    }    
 
     //technologies
-    public function getTechnologies($user_id) {
+    public function getTechnologies() {
         global $conn;
 
+        $user_id = $_GET['user_id'] ?? '';
+        
         header('Content-Type: text/event-stream');
         header('Cache-Control: no-cache');
 
