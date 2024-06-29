@@ -190,8 +190,6 @@ class AuthController {
 
         header('Content-Type: text/event-stream');
         header('Cache-Control: no-cache');
-        header('Connection: keep-alive');
-
         $response = array();
 
         $identifier = $_POST['identifier'] ?? ''; // either email or phone
@@ -279,7 +277,6 @@ class AuthController {
 
         header('Content-Type: text/event-stream');
         header('Cache-Control: no-cache');
-        header('Connection: keep-alive');
 
         $response = array();
 
@@ -345,7 +342,6 @@ class AuthController {
 
         header('Content-Type: text/event-stream');
         header('Cache-Control: no-cache');
-        header('Connection: keep-alive');
 
         $response = array();
 
