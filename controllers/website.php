@@ -85,7 +85,8 @@ class WebsiteController {
         if ($stmt->execute()) {
             $_SESSION['last_email_time'] = time();
 
-            $to = $email_address;
+            //send confirmation email to the user
+            $to_user = $email_address;
             $confirmation_subject = "Contact Form Submission Confirmation";
             $confirmation_message = "
             <html>
@@ -111,13 +112,31 @@ class WebsiteController {
             $headers .= 'From: andreagecoleaa@gmail.com' . "\r\n"; //email ko muna nialagay ko, palitan na lang
             $headers .= 'Reply-To: andreagecoleaa@gmail.com' . "\r\n";
 
-            if (mail($to, $confirmation_subject, $confirmation_message, $headers)) {
-                $response['status'] = 'success';
-                $response['message'] = 'Message submitted successfully. A confirmation email has been sent.';
-            } else {
-                $response['status'] = 'error';
-                $response['message'] = 'Message submitted, but confirmation email could not be sent.';
-            }
+            mail($to_user, $confirmation_subject, $confirmation_message, $headers);
+
+            //send email to the admin
+            $to_admin = "andreagecoleaa@gmail.com"; // replace with the actual admin email
+            $admin_subject = "New Contact Form Submission";
+            $admin_message = "
+            <html>
+            <head>
+                <style>
+                    .bold { font-weight: bold; }
+                </style>
+            </head>
+            <body>
+                <p class='bold'>New contact form submission received:</p>
+                <p class='bold'>Name:</p><p>$full_name</p>
+                <p class='bold'>Email:</p><p>$email_address</p>
+                <p class='bold'>Subject:</p><p>$subject</p>
+                <p class='bold'>Message:</p><p>$message</p>
+            </body>
+            </html>
+            ";
+            mail($to_admin, $admin_subject, $admin_message, $headers);
+
+            $response['status'] = 'success';
+            $response['message'] = 'Message submitted successfully. A confirmation email has been sent.';
         } else {
             $response['status'] = 'error';
             $response['message'] = 'Error submitting message: ' . $conn->error;
@@ -127,6 +146,4 @@ class WebsiteController {
         echo "data: " . json_encode($response) . "\n\n";
     }
 }
-?>
-
 ?>
