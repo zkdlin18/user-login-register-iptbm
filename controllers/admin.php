@@ -108,7 +108,6 @@ class AdminController {
 
         header('Content-Type: text/event-stream');
         header('Cache-Control: no-cache');
-        header('Connection: keep-alive');
 
         $response = array();
 
@@ -169,7 +168,6 @@ class AdminController {
 
         header('Content-Type: text/event-stream');
         header('Cache-Control: no-cache');
-        header('Connection: keep-alive');
 
         $response = array();
 
